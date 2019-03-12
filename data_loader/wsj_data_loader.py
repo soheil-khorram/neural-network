@@ -96,12 +96,13 @@ class Data:
 
     def parse_arguments(self, parser):
         base_path = os.path.dirname(os.path.abspath(__file__))
-        data_path = base_path + '/../../data_overlap'
-        parser.add_argument('-mfb-file', default=data_path + '/mfbs.npy',
-                            type=str, help='path for the mfb file')
-        parser.add_argument('-lab-file', default=data_path + '/short_labels.npy',
-                            type=str, help='path for the label file')
-
+        data_path = base_path + '/../../data_tri4b_mfb_40'
+        parser.add_argument('-tr-file', default=data_path + '/train_si284.pickle',
+                            type=str, help='train pickle file path')
+        parser.add_argument('-de-file', default=data_path + '/test_dev93.pickle',
+                            type=str, help='development pickle file path')
+        parser.add_argument('-te-file', default=data_path + '/test_eval93.pickle',
+                            type=str, help='test pickle file path')
         parser.add_argument('-down-up-num', default=0,
                             type=int, help='in the case of down-sampling up-sampling network')
         parser.add_argument('-utt-in-dim', default=40,
@@ -114,8 +115,12 @@ class Data:
                             type=int, help='output dimensionality')
 
     def set_params(self, prm):
-        self.mfb_file = prm.mfb_file
-        self.lab_file = prm.lab_file
+        self.tr_file = prm.tr_file
+        self.de_file = prm.de_file
+        self.te_file = prm.te_file
+        self.tr.set_params(prm)
+        self.de.set_params(prm)
+        self.te.set_params(prm)
 
     def __init__(self):
         self.tr = Data.Subset()
@@ -123,19 +128,6 @@ class Data:
         self.te = Data.Subset()
 
     def load(self):
-        all_mfbs = np.load(self.mfb_file)
-        all_labs = np.load(self.lab_file)
-        sample_num = all_mfbs.shape[0]
-        inds = np.arange(sample_num)
-        inds = np.random.shuffle(inds)
-        all_mfbs = all_mfbs[inds]
-        all_labs = all_labs[inds]
-        tr_mfbs = all_mfbs[:int(sample_num / 2)]
-        tr_labs = all_labs[:int(sample_num / 2)]
-        de_mfbs = all_mfbs[int(sample_num / 2):int(3 * sample_num / 4)]
-        de_labs = all_labs[int(sample_num / 2):int(3 * sample_num / 4)]
-        te_mfbs = all_mfbs[int(3 * sample_num / 4):]
-        te_labs = all_labs[int(3 * sample_num / 4):]
-        self.tr.load(tr_mfbs, tr_labs, shuffle=True)
-        self.de.load(de_mfbs, de_labs, shuffle=False)
-        self.te.load(te_mfbs, te_labs, shuffle=False)
+        self.tr.load(self.tr_file, shuffle=True)
+        self.de.load(self.de_file, shuffle=False)
+        self.te.load(self.te_file, shuffle=False)
