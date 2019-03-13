@@ -19,6 +19,7 @@ for ks in "${kernel_size[@]}"; do
         command="\
             python ../main.py \
                 -out-dir $out_dir \
+                -net-summary-path $out_dir/net_summary.txt \
                 -layer-num $ln \
                 -kernel-size $ks \
                 -kernel-num  $kernel_num \
