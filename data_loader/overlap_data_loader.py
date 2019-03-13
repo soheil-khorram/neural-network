@@ -22,24 +22,12 @@ class Data:
             self.batch_size = prm.batch_size
             self.utt_out_dim = prm.utt_out_dim
 
-        def load(self, file_path, shuffle):
+        def load(self, mfbs, labs, shuffle):
             self.shuffle = shuffle
-            data_dic = pickle.load(open(file_path, 'rb'))
-            self.ids = list(data_dic['input'].keys())
-            self.X = []
-            self.y = []
-            self._l = []
-            for id in self.ids:
-                X = data_dic['input'][id]
-                y = data_dic['output'][id]
-                _l = X.shape[0]
-                self.X.append(X)
-                self.y.append(y)
-                self._l.append(_l)
-            self.X = np.array(self.X)
-            self.y = np.array(self.y)
-            self._l = np.array(self._l)
-            self.ids = np.array(self.ids)
+            self.X = mfbs
+            self.y = labs
+            self._l = np.array([self.X[i].shape[0] for i in range(self.X.shape[0])])
+            self.ids = np.array([str(i) for i in range(self.X.shape[0])])
             self.sort_data()
             self.chunk_data()
             self.zero_pad_data()
@@ -69,7 +57,7 @@ class Data:
                 self.y[c] = batch_y
 
         def chunk_data(self):
-            num_of_chunks = int(np.ceil(len(self.ids) / self.batch_size))
+            num_of_chunks = int(np.ceil((len(self.ids) + 0.0) / self.batch_size))
             self.ids = np.array([self.ids[c * self.batch_size: (c + 1) * self.batch_size]
                                  for c in range(num_of_chunks)])
             self.X = np.array([self.X[c * self.batch_size: (c + 1) * self.batch_size]
@@ -101,16 +89,15 @@ class Data:
                             type=str, help='path for the mfb file')
         parser.add_argument('-lab-file', default=data_path + '/short_labels.npy',
                             type=str, help='path for the label file')
-
         parser.add_argument('-down-up-num', default=0,
                             type=int, help='in the case of down-sampling up-sampling network')
         parser.add_argument('-utt-in-dim', default=40,
                             type=int, help='dimensionality of the input')
-        parser.add_argument('-utt-pad-lab', default=3392,
+        parser.add_argument('-utt-pad-lab', default=0,
                             type=int, help='label to be added in the case of zepo padding')
-        parser.add_argument('-batch-size', default=16,
+        parser.add_argument('-batch-size', default=32,
                             type=int, help='batch size')
-        parser.add_argument('-utt-out-dim', default=3393,
+        parser.add_argument('-utt-out-dim', default=2,
                             type=int, help='output dimensionality')
 
     def set_params(self, prm):
