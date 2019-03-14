@@ -74,6 +74,7 @@ class Net(KerasNet):
     def construct(self):
         inp = Input(shape=(None, self.utt_in_dim))
         x = inp
+        x = self.dilated_conv(x, 1)
         for i in range(self.layer_num):
             for j in range(self.sub_layer_num):
                 y = self.dilated_conv(x, 2 ** i)
