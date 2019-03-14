@@ -12,9 +12,8 @@ class Net(KerasNet):
     def parse_arguments(self, parser):
         super(Net, self).parse_arguments(parser)
         parser.add_argument('-skip', default=1, type=int)
-        parser.add_argument('-super-layer-num', default=2, type=int)
-        parser.add_argument('-layer-num', default=5, type=int)
-        parser.add_argument('-sub-layer-num', default=2, type=int)
+        parser.add_argument('-dilated-layer-num', default=4, type=int)
+        parser.add_argument('-feature-layer-num', default=2, type=int)
         parser.add_argument('-activation', default='relu', type=str)
         parser.add_argument('-kernel-num', default=512, type=int)
         parser.add_argument('-kernel-size', default=3, type=int)
@@ -31,9 +30,8 @@ class Net(KerasNet):
     def set_params(self, prm):
         super(Net, self).set_params(prm)
         self.skip = prm.skip
-        self.super_layer_num = prm.super_layer_num
-        self.layer_num = prm.layer_num
-        self.sub_layer_num = prm.sub_layer_num
+        self.dilated_layer_num = prm.dilated_layer_num
+        self.feature_layer_num = prm.feature_layer_num
         self.utt_in_dim = prm.utt_in_dim
         self.activation = prm.activation
         self.kernel_num = prm.kernel_num
@@ -77,14 +75,18 @@ class Net(KerasNet):
         inp = Input(shape=(None, self.utt_in_dim))
         x = inp
         x = self.dilated_conv(x, 1)
-        for k in range(self.super_layer_num):
-            for i in range(self.layer_num):
-                for j in range(self.sub_layer_num):
-                    y = self.dilated_conv(x, 2 ** i)
-                    if self.skip == 1:
-                        x = Add()([x, y])
-                    else:
-                        x = y
+        for i in range(self.feature_layer_num - 1):
+            y = self.dilated_conv(x, 1)
+            if self.skip == 1:
+                x = Add()([x, y])
+            else:
+                x = y
+        for i in range(self.dilated_layer_num):
+            y = self.dilated_conv(x, 2 ** (i + 1))
+            if self.skip == 1:
+                x = Add()([x, y])
+            else:
+                x = y
         x = self.last_conv(x)
         outp = x
         self._net = Model(inputs=inp, outputs=outp)
