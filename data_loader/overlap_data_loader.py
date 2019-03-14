@@ -103,6 +103,9 @@ class Data:
     def set_params(self, prm):
         self.mfb_file = prm.mfb_file
         self.lab_file = prm.lab_file
+        self.tr.set_params(prm)
+        self.de.set_params(prm)
+        self.te.set_params(prm)
 
     def __init__(self):
         self.tr = Data.Subset()
@@ -114,7 +117,7 @@ class Data:
         all_labs = np.load(self.lab_file)
         sample_num = all_mfbs.shape[0]
         inds = np.arange(sample_num)
-        inds = np.random.shuffle(inds)
+        np.random.shuffle(inds)
         all_mfbs = all_mfbs[inds]
         all_labs = all_labs[inds]
         tr_mfbs = all_mfbs[:int(sample_num / 2)]

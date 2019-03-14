@@ -56,7 +56,7 @@ class Data:
             for c in range(len(self.ids)):
                 utt_len = self._l[c][-1] + 0.0
                 if self.down_up_num != 0:
-                    temp = 2 ** self.layer_num + 0.0
+                    temp = 2 ** self.down_up_num + 0.0
                     utt_len = (np.ceil(utt_len / temp) * temp).astype(int)
                 utt_len = int(utt_len)
                 utt_num = len(self.ids[c])

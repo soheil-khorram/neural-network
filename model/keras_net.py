@@ -41,19 +41,24 @@ class KerasNet:
             r.start()
         num_of_chunks = len(data_generator.ids)
         for c in range(num_of_chunks):
+            _l = data_generator._l[c]
             X = data_generator.X[c]
             y_true_cmp = data_generator.y[c]
             ids = data_generator.ids[c]
             y_pred = self._net.predict(X)
             y_pred_cmp = np.argmax(y_pred, -1)
             for u in range(y_true_cmp.shape[0]):
+                utt_l = _l[u]
                 utt_id = ids[u]
                 utt_y_true_cmp = y_true_cmp[u]
                 utt_y_pred_cmp = y_pred_cmp[u]
                 utt_y_pred = y_pred[u]
-                utt_y_pred_cmp = utt_y_pred_cmp[utt_y_true_cmp != self.utt_pad_lab]
-                utt_y_pred = utt_y_pred[utt_y_true_cmp != self.utt_pad_lab, :]
-                utt_y_true_cmp = utt_y_true_cmp[utt_y_true_cmp != self.utt_pad_lab]
+                utt_y_pred_cmp = utt_y_pred_cmp[:utt_l]
+                utt_y_pred = utt_y_pred[:utt_l, :]
+                utt_y_true_cmp = utt_y_true_cmp[:utt_l]
+                # utt_y_pred_cmp = utt_y_pred_cmp[utt_y_true_cmp != self.utt_pad_lab]
+                # utt_y_pred = utt_y_pred[utt_y_true_cmp != self.utt_pad_lab, :]
+                # utt_y_true_cmp = utt_y_true_cmp[utt_y_true_cmp != self.utt_pad_lab]
                 for r in result_handlers:
                     r.get_id(utt_id)
                     r.get_y_true_cmp(utt_y_true_cmp)
