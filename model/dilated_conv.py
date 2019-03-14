@@ -1,5 +1,5 @@
-from keras.layers import Conv1D, Input, Dropout, Add
-from keras.models import Model, load_model
+from keras.layers import Conv1D, Input, Add
+from keras.models import Model
 from keras.optimizers import Adam
 from keras.regularizers import l2
 from model.keras_net import KerasNet
@@ -12,6 +12,7 @@ class Net(KerasNet):
     def parse_arguments(self, parser):
         super(Net, self).parse_arguments(parser)
         parser.add_argument('-skip', default=1, type=int)
+        parser.add_argument('-super-layer-num', default=2, type=int)
         parser.add_argument('-layer-num', default=5, type=int)
         parser.add_argument('-sub-layer-num', default=2, type=int)
         parser.add_argument('-activation', default='relu', type=str)
@@ -30,6 +31,7 @@ class Net(KerasNet):
     def set_params(self, prm):
         super(Net, self).set_params(prm)
         self.skip = prm.skip
+        self.super_layer_num = prm.super_layer_num
         self.layer_num = prm.layer_num
         self.sub_layer_num = prm.sub_layer_num
         self.utt_in_dim = prm.utt_in_dim
@@ -75,13 +77,14 @@ class Net(KerasNet):
         inp = Input(shape=(None, self.utt_in_dim))
         x = inp
         x = self.dilated_conv(x, 1)
-        for i in range(self.layer_num):
-            for j in range(self.sub_layer_num):
-                y = self.dilated_conv(x, 2 ** i)
-                if self.skip == 1:
-                    x = Add()([x, y])
-                else:
-                    x = y
+        for k in range(self.super_layer_num):
+            for i in range(self.layer_num):
+                for j in range(self.sub_layer_num):
+                    y = self.dilated_conv(x, 2 ** i)
+                    if self.skip == 1:
+                        x = Add()([x, y])
+                    else:
+                        x = y
         x = self.last_conv(x)
         outp = x
         self._net = Model(inputs=inp, outputs=outp)
