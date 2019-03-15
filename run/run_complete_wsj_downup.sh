@@ -18,7 +18,7 @@ batch_size=8
 for hgn in "${hourglass_num[@]}"; do
     for ks in "${kernel_size[@]}"; do
         for ln in ${layer_num[@]}; do
-            out_dir=$base_path/$DATA_LOADER/$MODEL/ks_${ks}_ln_${ln}/
+            out_dir=$base_path/$DATA_LOADER/$MODEL/hg_${hgn}_ks_${ks}_ln_${ln}/
             command="\
                 python ../main.py \
                     -batch-size $batch_size \
