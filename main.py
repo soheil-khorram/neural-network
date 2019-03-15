@@ -71,7 +71,12 @@ Logger.write_log('Training the network ...')
 Logger.write_date_time()
 for e in range(net.epoch_num):
     Logger.write_log('Epoch ' + str(e))
-    net.train_one_epoch(db.tr)
+    fname = prm.out_dir + '/trained_models/iter' + str(e) + '.h5'
+    if os.path.isfile(fname):
+        Logger.write_log('File exists; I will load it instead of training it ...')
+        net.load(fname)
+    else:
+        net.train_one_epoch(db.tr)
+        net.save(fname)
     evaluate_network(save_preds=False)
-    net.save(prm.out_dir + '/trained_models/iter' + str(e) + '.h5')
     Logger.write_date_time()
