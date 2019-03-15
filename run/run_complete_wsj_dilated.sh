@@ -8,9 +8,9 @@ export CUDA_VISIBLE_DEVICE=0
 base_path=$(pwd)
 base_path=$base_path"/../../exp_results"
 mkdir -p $base_path
-skip=1
-dilated_layer_num=(4 5 3)
-feature_layer_num=(3 2)
+skip=0
+dilated_layer_num=(4)
+feature_layer_num=(5 7 9)
 kernel_num=512
 kernel_size=3
 step_size=0.0001
