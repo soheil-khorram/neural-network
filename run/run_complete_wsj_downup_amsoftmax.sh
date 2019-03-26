@@ -8,10 +8,10 @@ base_path=$(pwd)
 base_path=$base_path"/../../exp_results"
 mkdir -p $base_path
 hourglass_num=(5)
-layer_num=(5)
+layer_num=(3)
 kernel_num=512
 kernel_size=(5)
-epoch_num=20
+epoch_num=30
 step_size=0.0001
 batch_size=8
 

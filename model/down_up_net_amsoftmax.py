@@ -32,7 +32,7 @@ class NormalizedDense(Layer):
         return tuple(output_shape)
 
 
-def amsoftmax_loss(y_ture, y_pred, scale=20, margin=0.2):
+def amsoftmax_loss(y_ture, y_pred, scale=20, margin=0.1):
     y_pred = y_ture * (y_pred - margin) + (1 - y_ture) * y_pred
     y_pred *= scale
     return K.categorical_crossentropy(y_ture, y_pred, from_logits=True)
