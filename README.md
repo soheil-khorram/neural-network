@@ -14,7 +14,7 @@ References
 
 .. [1] Soheil Khorram, Zakaria Aldeneh, Dimitrios Dimitriadis, Melvin McInnis, and Emily Mower Provost, 
        *"Capturing Long-Term Temporal Dependencies with Convolutional Networks for Continuous Emotion Recognition"*,
-       Interspeech 2017.
+       Interspeech 2017. [`PDF <https://arxiv.org/pdf/1708.07050.pdf>`_]
 
 Author
 ------
