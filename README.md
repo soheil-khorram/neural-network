@@ -10,14 +10,14 @@ Repository for training neural networks with Keras.
 What is this repository?
 ------------------------
 
-This repository contains a Python project that can be used to train neural networks with Keras. It also provides a number of examples with different neural network architectures (such as dilated CNN [1], downsampling/upsampling network [1], hourglass network and deeply recursive network). Experiments reported in the paper [1] can be replicated with the code provided here.
+This repository contains a Python project that can be used to train neural networks with Keras. It also provides several examples with different neural network architectures (such as dilated CNN [1], downsampling/upsampling network [1], hourglass network and deeply recursive network). Experiments reported in the paper [1] can be replicated with the code provided here.
 
 How to use it?
 --------------
 
-To use this repository for training a network you must prepare three modules: (1) a data loader, (2) a keras model and (3) a run file. Below, we explain these modules in detail.
+To use this repository for training a network you must prepare three modules: (1) a data loader, (2) a Keras model and (3) a run file. Below, we explain these modules in detail.
 
-* Data loader - is responsible for preparing data for training and testing the networks. 'data_loader' folder contains two examples of the data loaders 'overlap_data_loader' and 'wsj_data_loader'. 'overlap_data_loader' is developed for the speech overlap detection task and 'wsj_data_loader' is designed for acoustic modeling of a HMM/DNN-based speech recognition on the Wall Street Journal (WSJ) corpus. To write a new data loader you must create a Data class with the following interface:
+* Data loader - is responsible for preparing data for training and testing the networks. 'data_loader' folder contains two examples of the data loaders 'overlap_data_loader' and 'wsj_data_loader'. 'overlap_data_loader' is developed for the speech overlap detection task and 'wsj_data_loader' is designed for acoustic modeling of an HMM/DNN-based speech recognition on the Wall Street Journal (WSJ) corpus. To write a new data loader you must create a Data class with the following interface:
 
 .. code-block:: python
 
@@ -36,7 +36,7 @@ To use this repository for training a network you must prepare three modules: (1
               def set_params(self, prm):
                   """
                   Each subset may require some parameters such as batch_size, utterance_input_dim or utterance_output_dim.
-                  This function takes these paramters from the prm argument and defines local fields for them.
+                  This function takes these parameters from the prm argument and defines local fields for them.
                   """
                   pass
 
@@ -85,7 +85,7 @@ To use this repository for training a network you must prepare three modules: (1
               self.te.load(self.te_file, shuffle=False)
 
 
-* Model - defines the architecture of the neural network. I have written many examples in the model folder. 'conv_net.py', 'dilated_conv.py', 'down_up_net.py' and 'recursive_conv_net.py' contain a standard CNN, a dilated convolutional network, an hourglass network and a deeply recursive network. To prepare a new model you must write a new class that inherits from KerasNet class. The interface of the class must be as follows:
+* Model - defines the architecture of the neural network. I have written many examples in the model folder. 'conv_net.py', 'dilated_conv.py', 'down_up_net.py' and 'recursive_conv_net.py' contain a standard CNN, a dilated convolutional network, an hourglass network, and a deeply recursive network. To prepare a new model you must write a new class that inherits from KerasNet class. The interface of the class must be as follows:
 
 .. code-block:: python
 
@@ -108,7 +108,7 @@ To use this repository for training a network you must prepare three modules: (1
               """Constructs a Keras network"""
               pass
               
-* Run file - determines data loader, model type, hyper-parameters of the model and input/output/log directories. I have prepared some examples in the run directory. For example, 'run_complete_wsj_conv.sh' trains a standard convolutional network for WSJ acoustic modeling on the GPU 0 (CUDA_VISIBLE_DEVICE=0) with different number of layers (10 8 6) and different kernel sizes (9 7 5). 
+* Run file - determines data loader, model type, hyper-parameters of the model and input/output/log directories. I have prepared some examples in the run directory. For example, 'run_complete_wsj_conv.sh' trains a standard convolutional network for WSJ acoustic modeling on the GPU 0 (CUDA_VISIBLE_DEVICE=0) with a different number of layers (10, 8, 6) and different kernel sizes (9, 7, 5). 
 
 
 References
@@ -122,4 +122,3 @@ Author
 ------
 
 - Soheil Khorram, 2019
-
