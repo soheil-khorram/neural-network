@@ -1,3 +1,7 @@
+# Author: Soheil Khorram
+# License: Simplified BSD
+
+
 import os
 import numpy as np
 from sklearn.metrics import confusion_matrix
