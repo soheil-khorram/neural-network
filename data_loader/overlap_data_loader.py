@@ -1,3 +1,6 @@
+# Author: Soheil Khorram
+# License: Simplified BSD
+
 import os
 import pickle
 from keras.utils import Sequence, np_utils
