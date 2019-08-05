@@ -1,3 +1,7 @@
+# Author: Soheil Khorram
+# License: Simplified BSD
+
+
 from keras.layers import Conv1D, Input, Dropout
 from keras.models import Model, load_model
 from keras.optimizers import Adam
