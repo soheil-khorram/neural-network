@@ -1,3 +1,7 @@
+# Author: Soheil Khorram
+# License: Simplified BSD
+
+
 import os
 import datetime
 
