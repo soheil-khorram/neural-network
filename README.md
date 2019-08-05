@@ -16,7 +16,7 @@ This repository contains a Python project that can be used to train neural netwo
 How to use it?
 --------------
 
-To use this repository for training a network you must prepare three modules: (1) a data provider, (2) a keras model and (3) a run file. Below, we explain these modules in detail.
+To use this repository for training a network you must prepare three modules: (1) a data provider, (2) a keras model and (3) a run file. Below, we explain these modules in detail. (I will write it later)
 
 
 
