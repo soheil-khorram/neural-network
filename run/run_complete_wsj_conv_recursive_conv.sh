@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Author: Soheil Khorram
+# License: Simplified BSD
+
+
 export MODEL='model.recursive_conv_net'
 export DATA_LOADER='data_loader.wsj_data_loader'
 export CUDA_VISIBLE_DEVICE=0
