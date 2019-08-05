@@ -8,6 +8,17 @@ It contains some examples that train standard dilated, downsampling/upsampling a
 
 .. image:: dilated_conv-deconv.png
 
+What is this repository?
+------------------------
+
+This repository contains a Python project that can be used to train neural networks with Keras. It also provides a number of examples with different neural network architectures (such as dilated CNN, hourglass network and deeply recursive network). 
+
+How to use it?
+--------------
+
+To use this repository for training a network you must prepare three modules: (1) a data provider, (2) a keras model and (3) a run file. Below, we explain these modules in detail.
+
+
 
 References
 ----------
