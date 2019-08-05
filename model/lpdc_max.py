@@ -1,3 +1,7 @@
+# Author: Soheil Khorram
+# License: Simplified BSD
+
+
 from keras.layers import Conv1D, Input, Add, MaxPooling1D
 from keras.models import Model
 from keras.optimizers import Adam
