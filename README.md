@@ -108,7 +108,7 @@ To use this repository for training a network you must prepare three modules: (1
               """Constructs a Keras network"""
               pass
               
-* Run file -  
+* Run file - determines data loader, model type, hyper-parameters of the model and input/output/log directories. I have prepared some examples in the run directory. For example, 'run_complete_wsj_conv.sh' trains a standard convolutional network for WSJ acoustic modeling on the GPU 0 (CUDA_VISIBLE_DEVICE=0) with different number of layers (10 8 6) and different kernel sizes (9 7 5). 
 
 
 References
